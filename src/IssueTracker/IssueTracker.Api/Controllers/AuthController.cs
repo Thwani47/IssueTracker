@@ -1,4 +1,4 @@
-﻿using IssueTracker.Api.Models;
+﻿using IssueTracker.DataAccess.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IssueTracker.Api.Controllers;

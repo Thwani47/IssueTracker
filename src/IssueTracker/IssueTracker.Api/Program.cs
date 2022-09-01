@@ -1,7 +1,10 @@
+using IssueTracker.DataAccess.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+var configuration = builder.Configuration;
+builder.Services.AddDataAccessServices(configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

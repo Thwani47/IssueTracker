@@ -14,4 +14,8 @@
       <Folder Include="Extensions" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\IssueTracker.DataAccess\IssueTracker.DataAccess.csproj" />
+    </ItemGroup>
+
 </Project>
