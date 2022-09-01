@@ -30,12 +30,35 @@ public class AuthController : ControllerBase
                 return BadRequest(new { Message = "Invalid username or password" });
             }
 
-            return Ok(new { Message = result.Message, Data = result.Data });
+            return Ok(new { result.Message, result.Data });
         }
         catch (Exception e)
         {
-            _logger.LogWarning("Error logging user in", e);
+            _logger.LogWarning($"Error logging user in: {e.Message}");
             return BadRequest(new { Message = "Error logging user in" });
+        }
+    }
+    
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+    {
+        if (!ModelState.IsValid) return BadRequest(new { Message = "Invalid request" });
+
+        try
+        {
+            var result = await _authorizationService.DoRegister(request);
+
+            if (result.Status == AuthRequestStatus.Failure)
+            {
+                return BadRequest(new { Message = $"Error registering new user: {result.Message}" });
+            }
+
+            return Ok(new { result.Message, result.Data });
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning($"Error registering new user {e.Message}");
+            return BadRequest(new { Message = "Error registering user" });
         }
     }
 }

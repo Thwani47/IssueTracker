@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[tb_Teams]
+(
+	[TeamId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [TeanName] VARCHAR(100) NOT NULL
+)

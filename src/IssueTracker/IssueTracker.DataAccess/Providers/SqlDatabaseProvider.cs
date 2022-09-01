@@ -2,12 +2,14 @@
 
 namespace IssueTracker.DataAccess.Providers;
 
-public class SqlDatabaseProvider
+public static class SqlDatabaseProvider
 {
-    public class IssueTrackerDatabase : Database
+    public static readonly IssueTrackerDatabase IssueTrackerDatabase = new IssueTrackerDatabase();
+}
+
+public class IssueTrackerDatabase : Database
+{
+    public IssueTrackerDatabase() : base("IssueTrackerDatabase")
     {
-        public IssueTrackerDatabase() : base("IssueTrackerDatabase")
-        {
-        }
     }
 }

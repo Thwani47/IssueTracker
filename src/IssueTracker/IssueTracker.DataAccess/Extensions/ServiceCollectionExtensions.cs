@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddLazyCache();
         services.Configure<DatabaseRetryOptions>(configuration.GetSection("DatabaseRetry"));
         services.AddSingleton<IConnectionProvider, SqlClientProvider>();
         services.AddSingleton<IConnectionStringProvider, AppSettingsConnectionStringProvider>();

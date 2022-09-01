@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[tb_Users]
+(
+	[UserId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [FirstName] VARCHAR(30) NOT NULL, 
+    [LastName] VARCHAR(30) NOT NULL, 
+    [Username] VARCHAR(30) NOT NULL, 
+    [Email] VARCHAR(30) NULL, 
+    [Salt] UNIQUEIDENTIFIER NOT NULL, 
+    [PasswordHash] BINARY(64) NOT NULL, 
+    [TeamId] UNIQUEIDENTIFIER NULL CONSTRAINT [FK_tb_Users_TeamId] FOREIGN KEY ([TeamId]) REFERENCES [tb_Teams]([TeamId])
+)

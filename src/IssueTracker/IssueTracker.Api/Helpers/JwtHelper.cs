@@ -8,13 +8,13 @@ namespace IssueTracker.Api.Helpers;
 
 public static class JwtHelper
 {
-    public static string GenerateJwtToken(LoginRequest request, string secret)
+    public static string GenerateJwtToken(Guid userId, string secret)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(secret);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[] { new Claim("username", request.Username) }),
+            Subject = new ClaimsIdentity(new[] { new Claim("Id", userId.ToString()) }),
             Expires = DateTime.UtcNow.AddDays(1),
             SigningCredentials =
                 new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
