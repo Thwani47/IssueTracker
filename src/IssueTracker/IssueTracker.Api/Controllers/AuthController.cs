@@ -61,4 +61,27 @@ public class AuthController : ControllerBase
             return BadRequest(new { Message = "Error registering user" });
         }
     }
+    
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> Login([FromBody] PasswordResetRequest request)
+    {
+        if (!ModelState.IsValid) return BadRequest(new { Message = "Invalid request" });
+
+        try
+        {
+            var result = await _authorizationService.DoPasswordReset(request);
+
+            if (result.Status == AuthRequestStatus.Failure)
+            {
+                return BadRequest(new { Message = "Failed to reset user password" });
+            }
+
+            return Ok(new { result.Message });
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning($"Error resetting user password: {e.Message}");
+            return BadRequest(new { Message = "Error resetting user password" });
+        }
+    }
 }

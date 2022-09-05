@@ -122,6 +122,55 @@ public class AuthorizationService : IAuthorizationService
         };
     }
 
+    public async Task<ResetPasswordResult> DoPasswordReset(PasswordResetRequest request)
+    {
+        // Check if username exists
+        var userExists = await CheckUserExists(request.Username);
+        if (!userExists)
+        {
+            return new ResetPasswordResult
+            {
+                Status = AuthRequestStatus.Failure,
+                Message = "User not found"
+            };
+        }
+        
+        // Check if password matches
+        if (!request.Password.Equals(request.ConfirmPassword))
+        {
+            return new ResetPasswordResult
+            {
+                Message = "Failed to register user. Password mismatch.",
+                Status = AuthRequestStatus.Failure
+            };
+        }
+        
+        // Update password
+        var parameters = new DynamicParameters();
+        parameters.Add("@Username", request.Username);
+        parameters.Add("@Password", request.Password);
+        parameters.Add("@ResponseMessage", dbType: DbType.String, size:100, direction: ParameterDirection.Output);
+        await _dapperDataAccess.ExecuteAsync(SqlDatabaseProvider.IssueTrackerDatabase,
+            DatabaseConstants.ResetUserPasswordStoredProc, parameters);
+     
+        var response = parameters.Get<string>("ResponseMessage");
+
+        if (response.Equals("Password reset successfully"))
+        {
+            return new ResetPasswordResult
+            {
+                Status = AuthRequestStatus.Success,
+                Message = response
+            };
+        }
+
+        return new ResetPasswordResult
+        {
+            Message = $"Failed to reset user password. {response}",
+            Status = AuthRequestStatus.Failure
+        };
+    }
+
     private async Task<bool> CheckUserExists(string username)
     {
         var parameters = new DynamicParameters();
