@@ -5,7 +5,7 @@ namespace IssueTracker.DataAccess;
 
 public interface IDataAccess
 {
-    Task ExecuteAsync(Database database, string query, object parameters, int? timeout = null, CommandType commandType = CommandType.StoredProcedure);
+    Task ExecuteAsync(Database database, string query, object parameters = null, int? timeout = null, CommandType commandType = CommandType.StoredProcedure);
 
-    Task<IEnumerable<T>> QueryAsync<T>(Database database, string query, object parameters, int? timeout = null, CommandType commandType = CommandType.StoredProcedure);
+    Task<IEnumerable<T>> QueryAsync<T>(Database database, string query, object parameters = null, int? timeout = null, CommandType commandType = CommandType.StoredProcedure);
 }

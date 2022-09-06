@@ -38,7 +38,6 @@ export const doSignUp = async (data) => {
 			return { success: true, response: res.data };
 		})
 		.catch((err) => {
-			console.log(err);
 			return { success: false, err: err.response.data };
 		});
 };
@@ -57,10 +56,23 @@ export const doResetPassword = async (data) => {
 };
 
 export const doGetUserDetails = async (userId, token) => {
-    const reqHeaders =  getAuthHeaders(token);
+	const reqHeaders = getAuthHeaders(token);
 	return await axios
 		.get(`${serverUrl}/api/users/data/userId/${userId}`, {
 			...reqHeaders
+		})
+		.then((res) => {
+			return { success: true, response: res.data };
+		})
+		.catch((err) => {
+			return { success: false, err };
+		});
+};
+
+export const doFetchAllUsers = async () => {
+	return await axios
+		.get(`${serverUrl}/api/users/all`, {
+			headers
 		})
 		.then((res) => {
 			return { success: true, response: res.data };

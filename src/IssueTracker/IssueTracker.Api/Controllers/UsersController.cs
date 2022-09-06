@@ -36,4 +36,25 @@ public class UsersController : ControllerBase
             return BadRequest(new { Message = "Error fetching user data" });
         }
     }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        try
+        {
+            var result = await _userService.DoGetAllUsers();
+
+            if (result.Status == AuthRequestStatus.Failure)
+            {
+                return NotFound(new { Message = "No users found" });
+            }
+
+            return Ok(new { result.Message, result.Data });
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning($"Error fetching users: {e.Message}");
+            return BadRequest(new { Message = "Error fetching users" });
+        }
+    }
 }

@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
         services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
         services.AddSingleton<IAuthorizationService, AuthorizationService>();
         services.AddSingleton<IUserService, UserService>();
+        services.AddSingleton<ITeamService, TeamService>();
         return services;
     }
 }

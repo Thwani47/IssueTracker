@@ -5,4 +5,5 @@ namespace IssueTracker.Api.Services;
 public interface IUserService
 {
     Task<UserDataResult> DoGetUserData(string userId);
+    Task<UserDataResult> DoGetAllUsers();
 }

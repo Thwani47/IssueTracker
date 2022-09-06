@@ -26,7 +26,6 @@ public class UserService : IUserService
         var enumerable = users as User[] ?? users.ToArray();
         if (enumerable.Any())
         {
-            var user = enumerable.First();
             return new UserDataResult
             {
                 Message = "User found",
@@ -42,6 +41,32 @@ public class UserService : IUserService
         {
             Status = AuthRequestStatus.Failure,
             Message = "User not found"
+        };
+    }
+
+    public async Task<UserDataResult> DoGetAllUsers()
+    {
+        var users = await _dapperDataAccess.QueryAsync<User>(SqlDatabaseProvider.IssueTrackerDatabase,
+            DatabaseConstants.GetAllUsersStoredProc);
+
+        var enumerable = users.ToList();
+        if (enumerable.Any())
+        {
+            return new UserDataResult()
+            {
+                Status = AuthRequestStatus.Success,
+                Message = "Users found",
+                Data = new Dictionary<string, object>
+                {
+                    {"users", enumerable}
+                }
+            };
+        }
+
+        return new UserDataResult
+        {
+            Status = AuthRequestStatus.Failure,
+            Message = "No users found"
         };
     }
 }

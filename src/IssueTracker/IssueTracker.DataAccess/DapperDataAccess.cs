@@ -26,7 +26,7 @@ public class DapperDataAccess : IDataAccess
         _connectionStringProvider = connectionStringProvider;
     }
 
-    public async Task ExecuteAsync(Database database, string query, object parameters, int? timeout = null, CommandType commandType = CommandType.StoredProcedure)
+    public async Task ExecuteAsync(Database database, string query, object parameters = null, int? timeout = null, CommandType commandType = CommandType.StoredProcedure)
     {
         await CreateRetryPolicy().ExecuteAsync(async () =>
         {
@@ -36,7 +36,7 @@ public class DapperDataAccess : IDataAccess
         });
     }
 
-    public async Task<IEnumerable<T>> QueryAsync<T>(Database database, string query, object parameters, int? timeout = null, CommandType commandType = CommandType.StoredProcedure)
+    public async Task<IEnumerable<T>> QueryAsync<T>(Database database, string query, object parameters = null, int? timeout = null, CommandType commandType = CommandType.StoredProcedure)
     {
         return await CreateRetryPolicy().ExecuteAsync(async () =>
         {
