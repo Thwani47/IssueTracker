@@ -1,6 +1,5 @@
 ﻿using IssueTracker.Api.Services;
 using IssueTracker.DataAccess.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IssueTracker.Api.Controllers;

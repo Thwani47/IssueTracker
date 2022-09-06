@@ -4,7 +4,6 @@ using IssueTracker.Api.Helpers;
 using IssueTracker.DataAccess.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

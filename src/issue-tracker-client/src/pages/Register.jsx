@@ -8,6 +8,7 @@ export default function Register() {
 	const lastNameRef = useRef();
 	const usernameRef = useRef();
 	const emailRef = useRef();
+	const userTypeRef = useRef();
 	const passwordRef = useRef();
 	const confirmPasswordRef = useRef();
 	const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function Register() {
 		const lastName = lastNameRef.current.value;
 		const username = usernameRef.current.value;
 		const email = emailRef.current.value;
+		const userType = parseInt(userTypeRef.current.value);
 		const password = passwordRef.current.value;
 		const confirmPassword = confirmPasswordRef.current.value;
 
@@ -27,9 +29,12 @@ export default function Register() {
 			lastName,
 			username,
 			email,
+			userType,
 			password,
 			confirmPassword
-		};
+        };
+
+        console.log(data)
 
 		const { success, response, err } = await doSignUp(data);
 
@@ -37,9 +42,9 @@ export default function Register() {
 			setError(null);
 			if (response.message === 'User Added Successfully') {
 				navigate('/login', { replace: true });
-			}else{
-                setError({message: 'Error registering user. Please try again'})
-            }
+			} else {
+				setError({ message: 'Error registering user. Please try again' });
+			}
 		} else {
 			setError({ message: err.title ? err.title : err.message });
 		}
@@ -94,6 +99,14 @@ export default function Register() {
 						autoComplete="on"
 						ref={emailRef}
 					/>
+					<label className="label">
+						<span className="label-text">Select user type</span>
+					</label>
+					<select className="select select-bordered flex" ref={userTypeRef}>
+						<option defaultValue value="0">Developer</option>
+						<option value="1">Administrator</option>
+						<option value="2">Team Lead</option>
+					</select>
 					<label className="label">
 						<span className="label-text">Password</span>
 					</label>

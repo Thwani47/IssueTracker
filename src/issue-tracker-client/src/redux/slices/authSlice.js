@@ -41,6 +41,8 @@ export const setUserData = (user) => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
+    sessionStorage.removeItem('id')
+    sessionStorage.removeItem('token')
 	dispatch(logoutSuccess());
 };
 export default authSlice.reducer;

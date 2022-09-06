@@ -5,6 +5,7 @@
     [LastName] VARCHAR(30) NOT NULL, 
     [Username] VARCHAR(30) NOT NULL, 
     [Email] VARCHAR(30) NULL, 
+    [UserType] INT NOT NULL DEFAULT 0,
     [Salt] UNIQUEIDENTIFIER NOT NULL, 
     [PasswordHash] BINARY(64) NOT NULL, 
     [TeamId] UNIQUEIDENTIFIER NULL CONSTRAINT [FK_tb_Users_TeamId] FOREIGN KEY ([TeamId]) REFERENCES [tb_Teams]([TeamId])

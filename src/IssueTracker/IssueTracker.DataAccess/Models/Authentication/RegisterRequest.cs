@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using IssueTracker.DataAccess.Models.Users;
+
 #pragma warning disable CS8618
 namespace IssueTracker.DataAccess.Models.Authentication;
 
@@ -18,6 +20,9 @@ public class RegisterRequest
     [StringLength(30, MinimumLength = 2, ErrorMessage = "Invalid email length")]
     [EmailAddress]
     public string Email { get; set; }
+    
+    [Required(ErrorMessage = "User type must be specified")]
+    public UserType UserType { get; set; }
     
     [Required(ErrorMessage = "Username is required")]
     [StringLength(30, MinimumLength = 2, ErrorMessage = "Invalid username length")]

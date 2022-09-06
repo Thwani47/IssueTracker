@@ -3,6 +3,7 @@
 	@LastName VARCHAR(30),
 	@Username VARCHAR(30),
 	@Email VARCHAR(30),
+	@UserType INT,
 	@Password VARCHAR(30),
 	@ResponseMessage VARCHAR(200) OUTPUT
 AS
@@ -13,8 +14,8 @@ BEGIN
 		DECLARE @UserId UNIQUEIDENTIFIER = NEWID();
 		DECLARE @Salt UNIQUEIDENTIFIER = NEWID();
 
-		INSERT INTO tb_Users (UserId, FirstName, LastName, Username, Email, Salt, PasswordHash )
-		VALUES (@UserId, @FirstName, @LastName, @Username, @Email, @Salt, HASHBYTES('SHA2_512', @Password + CAST(@Salt AS NVARCHAR(36))));
+		INSERT INTO tb_Users (UserId, FirstName, LastName, Username, Email, UserType, Salt, PasswordHash )
+		VALUES (@UserId, @FirstName, @LastName, @Username, @Email, @UserType, @Salt, HASHBYTES('SHA2_512', @Password + CAST(@Salt AS NVARCHAR(36))));
 
 		SET @ResponseMessage = 'User Added Successfully';
 	END TRY

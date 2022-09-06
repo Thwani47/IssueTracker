@@ -45,7 +45,7 @@ export default function NavBar() {
 					</div>
 					<div className="dropdown dropdown-end">
 						<div tabIndex="0" className="avatar placeholder">
-							<div className="btn bg-neutral-focus text-neutral-content rounded-full w-28">
+							<div className="btn bg-neutral-focus text-neutral-content rounded-full w-36">
 								<span className="text-s">{auth.user ? auth.user.firstName : ''}</span>
 							</div>
 						</div>

@@ -17,7 +17,7 @@ function App() {
 
 	useEffect(() => {
 		async function getUserDetails() {
-			const {success, response, err} = await doGetUserDetails(auth.userId, auth.token);
+			const {success, response} = await doGetUserDetails(auth.userId, auth.token);
 
 			if (success){
 				if (response.message == 'User found'){

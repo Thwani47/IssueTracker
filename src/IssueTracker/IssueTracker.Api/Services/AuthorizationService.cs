@@ -98,6 +98,7 @@ public class AuthorizationService : IAuthorizationService
         parameters.Add("@FirstName", request.FirstName);
         parameters.Add("@LastName", request.LastName);
         parameters.Add("@Email", request.Email);
+        parameters.Add("@UserType", (int)request.UserType);
         parameters.Add("@Username", request.Username);
         parameters.Add("@Password", request.Password);
         parameters.Add("@ResponseMessage", dbType: DbType.String, size:100, direction: ParameterDirection.Output);
