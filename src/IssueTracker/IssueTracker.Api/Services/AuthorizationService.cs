@@ -55,7 +55,7 @@ public class AuthorizationService : IAuthorizationService
             };
 
         var userId = parameters.Get<Guid>("UserId");
-        var token = JwtHelper.GenerateJwtToken(userId, _jwtOptions.Secret);
+        var token = JwtHelper.GenerateJwtToken(userId, _jwtOptions.Secret, _jwtOptions.Issuer, _jwtOptions.Audience);
 
         return new LoginResult
         {

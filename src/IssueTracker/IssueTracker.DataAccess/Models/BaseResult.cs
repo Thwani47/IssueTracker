@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 #pragma warning disable CS8618
-namespace IssueTracker.DataAccess.Models.Authentication;
+namespace IssueTracker.DataAccess.Models;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 [SuppressMessage("ReSharper", "PropertyCanBeMadeInitOnly.Global")]

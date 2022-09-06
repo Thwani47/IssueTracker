@@ -68,6 +68,7 @@
     <Build Include="Programmability\Stored Procedures\pr_GetUserByUsername.sql" />
     <Build Include="Programmability\Stored Procedures\pr_LogUserIn.sql" />
     <Build Include="Programmability\Stored Procedures\pr_ResetUserPassword.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_GetUserById.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="IssueTracker.Database.refactorlog" />

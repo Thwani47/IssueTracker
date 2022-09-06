@@ -9,6 +9,7 @@ public static class ServiceCollectionExtensions
     {
         services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
         services.AddSingleton<IAuthorizationService, AuthorizationService>();
+        services.AddSingleton<IUserService, UserService>();
         return services;
     }
 }

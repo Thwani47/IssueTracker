@@ -1,4 +1,5 @@
 ﻿using IssueTracker.Api.Services;
+using IssueTracker.DataAccess.Models;
 using IssueTracker.DataAccess.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,7 +64,7 @@ public class AuthController : ControllerBase
     }
     
     [HttpPost("reset-password")]
-    public async Task<IActionResult> Login([FromBody] PasswordResetRequest request)
+    public async Task<IActionResult> ResetPassword([FromBody] PasswordResetRequest request)
     {
         if (!ModelState.IsValid) return BadRequest(new { Message = "Invalid request" });
 

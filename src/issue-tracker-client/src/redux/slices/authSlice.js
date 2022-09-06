@@ -24,7 +24,7 @@ export const authSlice = createSlice({
 			state.authToken = null;
 			state.user = null;
 			state.userId = null;
-		}
+        },
 	}
 });
 
