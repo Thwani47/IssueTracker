@@ -5,7 +5,7 @@ using IssueTracker.DataAccess.Models;
 using IssueTracker.DataAccess.Models.Users;
 using IssueTracker.DataAccess.Providers;
 
-namespace IssueTracker.Api.Services;
+namespace IssueTracker.Api.Services.User;
 
 public class UserService : IUserService
 {
@@ -20,10 +20,10 @@ public class UserService : IUserService
     {
         var parameters = new DynamicParameters();
         parameters.Add("@UserId", userId);
-        var users = await _dapperDataAccess.QueryAsync<User>(SqlDatabaseProvider.IssueTrackerDatabase,
+        var users = await _dapperDataAccess.QueryAsync<DataAccess.Models.User>(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.GetUserByIdStoredProc, parameters);
 
-        var enumerable = users as User[] ?? users.ToArray();
+        var enumerable = users as DataAccess.Models.User[] ?? users.ToArray();
         if (enumerable.Any())
         {
             return new UserDataResult
@@ -46,7 +46,7 @@ public class UserService : IUserService
 
     public async Task<UserDataResult> DoGetAllUsers()
     {
-        var users = await _dapperDataAccess.QueryAsync<User>(SqlDatabaseProvider.IssueTrackerDatabase,
+        var users = await _dapperDataAccess.QueryAsync<DataAccess.Models.User>(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.GetAllUsersStoredProc);
 
         var enumerable = users.ToList();

@@ -73,6 +73,10 @@
     <Build Include="Programmability\Stored Procedures\pr_GetTeamById.sql" />
     <Build Include="Programmability\Stored Procedures\pr_InsertNewTeam.sql" />
     <Build Include="Programmability\Stored Procedures\pr_GetAllUsers.sql" />
+    <Build Include="Tables\tb_Products.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_InsertNewProduct.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_GetAllProducts.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_GetProductById.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="IssueTracker.Database.refactorlog" />

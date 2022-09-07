@@ -2,6 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../redux/slices/authSlice';
+import { clearProducts } from '../redux/slices/productsSlice';
+import { clearTeams } from '../redux/slices/teamsSlice';
+import { clearUsers } from '../redux/slices/usersSlice';
 
 export default function NavBar() {
 	const auth = useSelector((state) => state.auth);
@@ -10,6 +13,9 @@ export default function NavBar() {
 
 	const doLogout = () => {
 		dispatch(logout());
+		dispatch(clearProducts())
+		dispatch(clearUsers())
+		dispatch(clearTeams())
 		navigate('/', { replace: true });
 	};
 	return (

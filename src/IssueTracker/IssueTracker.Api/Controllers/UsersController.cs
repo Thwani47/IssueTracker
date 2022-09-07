@@ -1,4 +1,4 @@
-﻿using IssueTracker.Api.Services;
+﻿using IssueTracker.Api.Services.User;
 using IssueTracker.DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 

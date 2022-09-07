@@ -10,14 +10,21 @@ export const usersSlice = createSlice({
 	reducers: {
 		usersFetchSuccess: (state, action) => {
 			state.users = action.payload.users;
+		},
+		clearUsersSuccess: (state) => {
+			state.users = null;
 		}
 	}
 });
 
-export const { usersFetchSuccess } = usersSlice.actions;
+export const { usersFetchSuccess, clearUsersSuccess } = usersSlice.actions;
 
 export const setUsers = (users) => (dispatch) => {
 	dispatch(usersFetchSuccess({ users }));
+};
+
+export const clearUsers = () => (dispatch) => {
+	dispatch(clearUsersSuccess());
 };
 
 export default usersSlice.reducer;

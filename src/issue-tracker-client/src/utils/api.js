@@ -105,3 +105,27 @@ export const doFetchAllTeams = async () => {
 			return { success: false, err };
 		});
 };
+
+export const doAddNewProduct = async (data) => {
+	return await axios
+		.post(`${serverUrl}/api/products`, data, { headers })
+		.then((res) => {
+			return { success: true, response: res.data };
+		})
+		.catch((err) => {
+			return { success: false, err };
+		});
+};
+
+export const doFetchAllProducts = async () => {
+	return await axios
+		.get(`${serverUrl}/api/products/all`, {
+			headers
+		})
+		.then((res) => {
+			return { success: true, response: res.data };
+		})
+		.catch((err) => {
+			return { success: false, err };
+		});
+};

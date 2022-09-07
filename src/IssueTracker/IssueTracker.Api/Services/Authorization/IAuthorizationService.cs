@@ -1,6 +1,6 @@
 ﻿using IssueTracker.DataAccess.Models.Authentication;
 
-namespace IssueTracker.Api.Services;
+namespace IssueTracker.Api.Services.Authorization;
 
 public interface IAuthorizationService
 {

@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import FormModal from '../components/FormModal';
+import NewProductForm from '../components/NewProductForm';
 import NewTeamForm from '../components/NewTeamForm';
+import ProductsTable from '../components/ProductsTable';
 import TeamsTable from '../components/TeamsTable';
+import { setProducts } from '../redux/slices/productsSlice';
 import { setTeams } from '../redux/slices/teamsSlice';
 import { setUsers } from '../redux/slices/usersSlice';
-import { doFetchAllTeams, doFetchAllUsers } from '../utils/api';
+import { doFetchAllProducts, doFetchAllTeams, doFetchAllUsers } from '../utils/api';
 
 export default function AdministratorPage() {
 	const teams = useSelector((state) => state.teams.teams);
+	const products = useSelector((state) => state.products.products);
 	const dispatch = useDispatch();
 	useEffect(
 		() => {
@@ -37,6 +42,22 @@ export default function AdministratorPage() {
 			}
 
 			getAllTeams();
+		},
+		[ dispatch ]
+	);
+
+	useEffect(
+		() => {
+			async function getAllProducts() {
+				const { success, response } = await doFetchAllProducts();
+				if (success) {
+					if (response.message === 'Products found') {
+						dispatch(setProducts(response.data.products));
+					}
+				}
+			}
+
+			getAllProducts();
 		},
 		[ dispatch ]
 	);
@@ -73,20 +94,23 @@ export default function AdministratorPage() {
 						Add New Team
 					</label>
 
-					<input type="checkbox" id="new-team-modal" className="modal-toggle" />
-					<div className="modal">
-						<div className="modal-box relative">
-							<label htmlFor="new-team-modal" className="btn btn-sm btn-circle absolute right-2 top-2">
-								✕
-							</label>
-							<h3 className="text-lg font-bold">Create new team</h3>
-							<NewTeamForm modalId="new-team-modal" />
-						</div>
-					</div>
+					<FormModal
+						id="new-team-modal"
+						form={<NewTeamForm modalId="new-team-modal" />}
+						title="Create new team"
+					/>
 				</div>
 				<div className="flex flex-col">
 					<h1 className="text-xl">Products</h1>
-					<button className="btn btn-accent btn-xs">Add New Product</button>
+					{products && products.length > 0 ? <ProductsTable products={products} /> : null}
+					<label htmlFor="new-product-modal" className="btn modal-label btn-accent btn-xs mt-2 w-36">
+						Add New Product
+					</label>
+					<FormModal
+						id="new-product-modal"
+						form={<NewProductForm modalId="new-product-modal" />}
+						title="Create new product"
+					/>
 				</div>
 			</div>
 		</div>
