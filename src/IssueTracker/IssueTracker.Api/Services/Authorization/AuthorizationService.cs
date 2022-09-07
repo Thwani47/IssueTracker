@@ -6,6 +6,7 @@ using IssueTracker.DataAccess;
 using IssueTracker.DataAccess.Constants;
 using IssueTracker.DataAccess.Models;
 using IssueTracker.DataAccess.Models.Authentication;
+using IssueTracker.DataAccess.Models.Users;
 using IssueTracker.DataAccess.Providers;
 using Microsoft.Extensions.Options;
 
@@ -172,11 +173,11 @@ public class AuthorizationService : IAuthorizationService
         };
     }
 
-    private async Task<(bool, DataAccess.Models.User?)> CheckUserExists(string username)
+    private async Task<(bool, User?)> CheckUserExists(string username)
     {
         var parameters = new DynamicParameters();
-        parameters.Add("Username", username);
-        var users = await _dapperDataAccess.QueryAsync<DataAccess.Models.User>(SqlDatabaseProvider.IssueTrackerDatabase,
+        parameters.Add("@Username", username);
+        var users = await _dapperDataAccess.QueryAsync<User>(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.GetUserByUsernameStoredProc, parameters);
 
         var enumerable = users.ToList();

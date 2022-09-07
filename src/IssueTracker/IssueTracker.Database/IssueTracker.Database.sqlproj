@@ -77,6 +77,13 @@
     <Build Include="Programmability\Stored Procedures\pr_InsertNewProduct.sql" />
     <Build Include="Programmability\Stored Procedures\pr_GetAllProducts.sql" />
     <Build Include="Programmability\Stored Procedures\pr_GetProductById.sql" />
+    <Build Include="Tables\tb_Issues.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_GetAllIssues.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_GetIssueById.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_InsertNewIssue.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_UpdateIssueStatus.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_UpdateIssuePriority.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_UpdateIssueAssignee.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="IssueTracker.Database.refactorlog" />

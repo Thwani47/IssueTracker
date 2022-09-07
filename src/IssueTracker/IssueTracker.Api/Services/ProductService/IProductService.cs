@@ -1,6 +1,6 @@
 ﻿using IssueTracker.DataAccess.Models.Products;
 
-namespace IssueTracker.Api.Services.Product;
+namespace IssueTracker.Api.Services.ProductService;
 
 public interface IProductService
 {

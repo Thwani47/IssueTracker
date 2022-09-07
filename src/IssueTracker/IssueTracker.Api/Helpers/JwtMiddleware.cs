@@ -1,5 +1,5 @@
 ﻿using IssueTracker.Api.Options;
-using IssueTracker.Api.Services.User;
+using IssueTracker.Api.Services.UserService;
 using Microsoft.Extensions.Options;
 
 namespace IssueTracker.Api.Helpers;

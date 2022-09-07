@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using IssueTracker.DataAccess.Models.Users;
 
 #pragma warning disable CS8618
 
-namespace IssueTracker.DataAccess.Models;
+namespace IssueTracker.DataAccess.Models.Users;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class User

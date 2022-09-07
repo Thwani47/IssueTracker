@@ -6,7 +6,7 @@ using IssueTracker.DataAccess.Models;
 using IssueTracker.DataAccess.Models.Products;
 using IssueTracker.DataAccess.Providers;
 
-namespace IssueTracker.Api.Services.Product;
+namespace IssueTracker.Api.Services.ProductService;
 
 public class ProductService : IProductService
 {
@@ -18,7 +18,7 @@ public class ProductService : IProductService
     }
     public async Task<ProductDataResult> DoGetAllProducts()
     {
-        var products = await _dapperDataAccess.QueryAsync<DataAccess.Models.Products.Product>(SqlDatabaseProvider.IssueTrackerDatabase,
+        var products = await _dapperDataAccess.QueryAsync<Product>(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.GetAllProductsStoredProc);
 
         var enumerable = products.ToList();
@@ -41,7 +41,7 @@ public class ProductService : IProductService
             Message = "No products found",
             Data = new Dictionary<string, object>
             {
-            {"products", new List<DataAccess.Models.Products.Product>()}
+            {"products", new List<Product>()}
         }
         };
     }
@@ -50,10 +50,10 @@ public class ProductService : IProductService
     {
         var parameters = new DynamicParameters();
         parameters.Add("@ProductId", productId);
-        var products = await _dapperDataAccess.QueryAsync<DataAccess.Models.Products.Product>(SqlDatabaseProvider.IssueTrackerDatabase,
+        var products = await _dapperDataAccess.QueryAsync<Product>(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.GetProductByIdStoredProc, parameters);
 
-        var enumerable = products as DataAccess.Models.Products.Product[] ?? products.ToArray();
+        var enumerable = products as Product[] ?? products.ToArray();
         if (enumerable.Any())
         {
             return new ProductDataResult

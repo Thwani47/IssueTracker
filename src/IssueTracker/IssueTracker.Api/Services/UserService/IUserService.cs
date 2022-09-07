@@ -1,6 +1,6 @@
 ﻿using IssueTracker.DataAccess.Models.Users;
 
-namespace IssueTracker.Api.Services.User;
+namespace IssueTracker.Api.Services.UserService;
 
 public interface IUserService
 {

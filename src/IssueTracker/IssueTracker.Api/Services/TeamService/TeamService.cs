@@ -6,7 +6,7 @@ using IssueTracker.DataAccess.Models;
 using IssueTracker.DataAccess.Models.Team;
 using IssueTracker.DataAccess.Providers;
 
-namespace IssueTracker.Api.Services.Team;
+namespace IssueTracker.Api.Services.TeamService;
 
 public class TeamService : ITeamService
 {
@@ -19,7 +19,7 @@ public class TeamService : ITeamService
 
     public async Task<TeamDataResult> DoGetAllTeams()
     {
-        var teams = await _dapperDataAccess.QueryAsync<DataAccess.Models.Team.Team>(SqlDatabaseProvider.IssueTrackerDatabase,
+        var teams = await _dapperDataAccess.QueryAsync<Team>(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.GetAllTeamsStoredProc);
 
         var enumerable = teams.ToList();
@@ -47,10 +47,10 @@ public class TeamService : ITeamService
     {
         var parameters = new DynamicParameters();
         parameters.Add("@TeamId", teamId);
-        var teams = await _dapperDataAccess.QueryAsync<DataAccess.Models.Team.Team>(SqlDatabaseProvider.IssueTrackerDatabase,
+        var teams = await _dapperDataAccess.QueryAsync<Team>(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.GetTeamByIdStoredProc, parameters);
 
-        var enumerable = teams as DataAccess.Models.Team.Team[] ?? teams.ToArray();
+        var enumerable = teams as Team[] ?? teams.ToArray();
         if (enumerable.Any())
         {
             return new TeamDataResult

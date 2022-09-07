@@ -1,8 +1,9 @@
 ﻿using IssueTracker.Api.Options;
 using IssueTracker.Api.Services.Authorization;
-using IssueTracker.Api.Services.Product;
-using IssueTracker.Api.Services.Team;
-using IssueTracker.Api.Services.User;
+using IssueTracker.Api.Services.IssueService;
+using IssueTracker.Api.Services.ProductService;
+using IssueTracker.Api.Services.TeamService;
+using IssueTracker.Api.Services.UserService;
 
 namespace IssueTracker.Api.Extensions;
 
@@ -16,6 +17,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IUserService, UserService>();
         services.AddSingleton<ITeamService, TeamService>();
         services.AddSingleton<IProductService, ProductService>();
+        services.AddSingleton<IIssueService, IssueService>();
         return services;
     }
 }

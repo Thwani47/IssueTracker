@@ -1,6 +1,6 @@
 ﻿using IssueTracker.DataAccess.Models.Team;
 
-namespace IssueTracker.Api.Services.Team;
+namespace IssueTracker.Api.Services.TeamService;
 
 public interface ITeamService
 {

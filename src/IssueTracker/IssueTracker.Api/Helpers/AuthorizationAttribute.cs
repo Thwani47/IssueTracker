@@ -1,4 +1,5 @@
 ﻿using IssueTracker.DataAccess.Models;
+using IssueTracker.DataAccess.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

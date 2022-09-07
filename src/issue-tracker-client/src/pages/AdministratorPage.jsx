@@ -101,7 +101,7 @@ export default function AdministratorPage() {
 					/>
 				</div>
 				<div className="flex flex-col">
-					<h1 className="text-xl">Products</h1>
+					<h1 className="text-xl text-accent font-bold self-start underline mt-3">Products</h1>
 					{products && products.length > 0 ? <ProductsTable products={products} /> : null}
 					<label htmlFor="new-product-modal" className="btn modal-label btn-accent btn-xs mt-2 w-36">
 						Add New Product
