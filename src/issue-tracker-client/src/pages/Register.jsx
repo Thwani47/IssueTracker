@@ -32,9 +32,7 @@ export default function Register() {
 			userType,
 			password,
 			confirmPassword
-        };
-
-        console.log(data)
+		};
 
 		const { success, response, err } = await doSignUp(data);
 
@@ -46,7 +44,15 @@ export default function Register() {
 				setError({ message: 'Error registering user. Please try again' });
 			}
 		} else {
-			setError({ message: err.title ? err.title : err.message });
+			let message = err.response ? error.response.data.message : err.message;
+			if (message === null) {
+				message = err.message;
+			}
+
+			if (message == null) {
+				message = err.title;
+			}
+			setError({ message });
 		}
 	};
 	return (
@@ -55,7 +61,7 @@ export default function Register() {
 			<p className="text-s mt-2">Create account</p>
 
 			<div className="form-control w-full max-w-xl self-center mt-5 p-4">
-				{error === null ? null : <span className="text-red-700">{error.message}</span>}
+				{error === null ? null : <span className="text-red-700">{error.message ? error.message : ''}</span>}
 				<form onSubmit={handleSubmit}>
 					<label className="label">
 						<span className="label-text">First Name</span>
@@ -103,7 +109,9 @@ export default function Register() {
 						<span className="label-text">Select user type</span>
 					</label>
 					<select className="select select-bordered flex" ref={userTypeRef}>
-						<option defaultValue value="0">Developer</option>
+						<option defaultValue value="0">
+							Developer
+						</option>
 						<option value="1">Administrator</option>
 						<option value="2">Team Lead</option>
 					</select>

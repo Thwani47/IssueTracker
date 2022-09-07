@@ -13,7 +13,7 @@ BEGIN
 		DECLARE @Salt UNIQUEIDENTIFIER = NEWID();
 
 		UPDATE tb_Users 
-		SET Salt = @Salt, PasswordHash = HASHBYTES('SHA2_512', @Password + CAST(Salt AS NVARCHAR(36)));
+		SET Salt = @Salt, PasswordHash = HASHBYTES('SHA2_512', @Password + CAST(@Salt AS NVARCHAR(36)));
 
 		SET @ResponseMessage = 'Password reset successfully';
 	END

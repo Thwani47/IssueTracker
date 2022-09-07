@@ -25,7 +25,7 @@ public class AuthorizationService : IAuthorizationService
     public async Task<LoginResult> DoLogin(LoginRequest request)
     {
         // check is username exists
-        var userExists = await CheckUserExists(request.Username);
+        var (userExists, _) = await CheckUserExists(request.Username);
         if (!userExists)
         {
             return new LoginResult
@@ -73,7 +73,7 @@ public class AuthorizationService : IAuthorizationService
     public async Task<RegisterResult> DoRegister(RegisterRequest request)
     {
         // check if username is already taken
-        var userExists = await CheckUserExists(request.Username);
+        var (userExists, _) = await CheckUserExists(request.Username);
         if (userExists)
         {
             return new RegisterResult
@@ -126,7 +126,7 @@ public class AuthorizationService : IAuthorizationService
     public async Task<ResetPasswordResult> DoPasswordReset(PasswordResetRequest request)
     {
         // Check if username exists
-        var userExists = await CheckUserExists(request.Username);
+        var (userExists, user) = await CheckUserExists(request.Username);
         if (!userExists)
         {
             return new ResetPasswordResult
@@ -148,7 +148,7 @@ public class AuthorizationService : IAuthorizationService
         
         // Update password
         var parameters = new DynamicParameters();
-        parameters.Add("@Username", request.Username);
+        parameters.Add("@UserId", user.UserId.ToString());
         parameters.Add("@Password", request.Password);
         parameters.Add("@ResponseMessage", dbType: DbType.String, size:100, direction: ParameterDirection.Output);
         await _dapperDataAccess.ExecuteAsync(SqlDatabaseProvider.IssueTrackerDatabase,
@@ -172,13 +172,14 @@ public class AuthorizationService : IAuthorizationService
         };
     }
 
-    private async Task<bool> CheckUserExists(string username)
+    private async Task<(bool, User?)> CheckUserExists(string username)
     {
         var parameters = new DynamicParameters();
         parameters.Add("Username", username);
         var users = await _dapperDataAccess.QueryAsync<User>(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.GetUserByUsernameStoredProc, parameters);
-        
-        return users.Any();
+
+        var enumerable = users.ToList();
+        return (enumerable.Any(), enumerable.FirstOrDefault());
     }
 }

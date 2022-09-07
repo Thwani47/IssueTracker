@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import NewTeamForm from '../components/NewTeamForm';
+import TeamsTable from '../components/TeamsTable';
+import { setTeams } from '../redux/slices/teamsSlice';
 import { setUsers } from '../redux/slices/usersSlice';
-import { doFetchAllUsers } from '../utils/api';
+import { doFetchAllTeams, doFetchAllUsers } from '../utils/api';
 
 export default function AdministratorPage() {
+	const teams = useSelector((state) => state.teams.teams);
 	const dispatch = useDispatch();
 	useEffect(
 		() => {
@@ -17,6 +21,22 @@ export default function AdministratorPage() {
 			}
 
 			getAllUsers();
+		},
+		[ dispatch ]
+	);
+
+	useEffect(
+		() => {
+			async function getAllTeams() {
+				const { success, response } = await doFetchAllTeams();
+				if (success) {
+					if (response.message === 'Teams found') {
+						dispatch(setTeams(response.data.teams));
+					}
+				}
+			}
+
+			getAllTeams();
 		},
 		[ dispatch ]
 	);
@@ -46,8 +66,10 @@ export default function AdministratorPage() {
 			</div>
 			<div className="flex flex-row mt-3 justify-between">
 				<div className="flex flex-col">
-					<h1 className="text-xl">Teams</h1>
-					<label htmlFor="new-team-modal" className="btn modal-button btn-accent btn-xs">
+					<h1 className="text-xl text-accent font-bold self-start underline mt-3">Teams</h1>
+					{teams && teams.length > 0 ? <TeamsTable teams={teams} /> : null}
+
+					<label htmlFor="new-team-modal" className="btn modal-button btn-accent btn-xs w-32 mt-2">
 						Add New Team
 					</label>
 
@@ -58,7 +80,7 @@ export default function AdministratorPage() {
 								✕
 							</label>
 							<h3 className="text-lg font-bold">Create new team</h3>
-							<button className="btn btn-info btn-xs">Create Team</button>
+							<NewTeamForm modalId="new-team-modal" />
 						</div>
 					</div>
 				</div>

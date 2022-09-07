@@ -74,7 +74,7 @@ public class AuthController : ControllerBase
 
             if (result.Status == AuthRequestStatus.Failure)
             {
-                return BadRequest(new { Message = "Failed to reset user password" });
+                return BadRequest(new { result.Message });
             }
 
             return Ok(new { result.Message });

@@ -63,6 +63,7 @@ public class TeamController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddNewTeam([FromBody] AddTeamRequest request)
     {
+        if (!ModelState.IsValid) return BadRequest(new { Message = "Invalid request" });
         try
         {
             var result = await _teamService.DoAddNewTeam(request);

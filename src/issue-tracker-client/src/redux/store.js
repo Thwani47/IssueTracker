@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import themeReducer from './slices/themeSlice';
 import authReducer from './slices/authSlice';
-import usersReducer from './slices/usersSlice'
+import usersReducer from './slices/usersSlice';
+import teamsReducer from './slices/teamsSlice';
 
 export const store = configureStore({
 	reducer: {
 		theme: themeReducer,
 		auth: authReducer,
-		users : usersReducer
+		users: usersReducer,
+		teams: teamsReducer
 	}
 });

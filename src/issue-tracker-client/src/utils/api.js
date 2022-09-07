@@ -81,3 +81,27 @@ export const doFetchAllUsers = async () => {
 			return { success: false, err };
 		});
 };
+
+export const doAddNewTeam = async (data) => {
+	return await axios
+		.post(`${serverUrl}/api/team`, data, { headers })
+		.then((res) => {
+			return { success: true, response: res.data };
+		})
+		.catch((err) => {
+			return { success: false, err };
+		});
+};
+
+export const doFetchAllTeams = async () => {
+	return await axios
+		.get(`${serverUrl}/api/team/all`, {
+			headers
+		})
+		.then((res) => {
+			return { success: true, response: res.data };
+		})
+		.catch((err) => {
+			return { success: false, err };
+		});
+};

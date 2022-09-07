@@ -55,7 +55,9 @@ export default function NavBar() {
 							className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 						>
 							<li>
-								<a className="justify-between">Profile</a>
+								<a href="/profile" className="justify-between">
+									Profile
+								</a>
 							</li>
 							<li>
 								<a onClick={() => doLogout()}>Logout</a>

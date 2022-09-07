@@ -1,10 +1,14 @@
-﻿namespace IssueTracker.DataAccess.Models.Team;
+﻿using System.Diagnostics.CodeAnalysis;
+#pragma warning disable CS8618
 
+namespace IssueTracker.DataAccess.Models.Team;
+
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public class Team
 {
     public Guid TeamId { get; set; }
-#pragma warning disable CS8618
     public string TeamName { get; set; }
-#pragma warning restore CS8618
-    public Guid TeamLead { get; set; }
+    public Guid UserId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }
