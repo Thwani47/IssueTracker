@@ -16,11 +16,9 @@ const getAuthHeaders = (token) => {
 	};
 };
 
-export const doLogin = async (data) => {
+const doPostRequest = async (url, data) => {
 	return await axios
-		.post(`${serverUrl}/api/auth/login`, data, {
-			headers
-		})
+		.post(`${serverUrl}/${url}`, data, { headers })
 		.then((res) => {
 			return { success: true, response: res.data };
 		})
@@ -29,36 +27,9 @@ export const doLogin = async (data) => {
 		});
 };
 
-export const doSignUp = async (data) => {
+const doGetRequest = async (url, reqHeaders) => {
 	return await axios
-		.post(`${serverUrl}/api/auth/register`, data, {
-			headers
-		})
-		.then((res) => {
-			return { success: true, response: res.data };
-		})
-		.catch((err) => {
-			return { success: false, err: err.response.data };
-		});
-};
-
-export const doResetPassword = async (data) => {
-	return await axios
-		.post(`${serverUrl}/api/auth/reset-password`, data, {
-			headers
-		})
-		.then((res) => {
-			return { success: true, response: res.data };
-		})
-		.catch((err) => {
-			return { success: false, err };
-		});
-};
-
-export const doGetUserDetails = async (userId, token) => {
-	const reqHeaders = getAuthHeaders(token);
-	return await axios
-		.get(`${serverUrl}/api/users/data/userId/${userId}`, {
+		.get(`${serverUrl}/${url}`, {
 			...reqHeaders
 		})
 		.then((res) => {
@@ -69,63 +40,47 @@ export const doGetUserDetails = async (userId, token) => {
 		});
 };
 
-export const doFetchAllUsers = async () => {
-	return await axios
-		.get(`${serverUrl}/api/users/all`, {
-			headers
-		})
-		.then((res) => {
-			return { success: true, response: res.data };
-		})
-		.catch((err) => {
-			return { success: false, err };
-		});
+export const doLogin = async (data) => {
+	return await doPostRequest('api/auth/login', data);
+};
+
+export const doSignUp = async (data) => {
+	return await doPostRequest('api/auth/register', data);
+};
+
+export const doResetPassword = async (data) => {
+	return await doPostRequest('api/auth/reset-password', data);
+};
+
+export const doGetUserDetails = async (userId, token) => {
+	const reqHeaders = getAuthHeaders(token);
+	return await doGetRequest(`api/users/data/userId/${userId}`, reqHeaders);
+};
+
+export const doFetchAllUsers = async (userType) => {
+	return await doGetRequest(`api/users/all/${userType}`, headers);
 };
 
 export const doAddNewTeam = async (data) => {
-	return await axios
-		.post(`${serverUrl}/api/team`, data, { headers })
-		.then((res) => {
-			return { success: true, response: res.data };
-		})
-		.catch((err) => {
-			return { success: false, err };
-		});
+	return await doPostRequest('api/team', data);
 };
 
 export const doFetchAllTeams = async () => {
-	return await axios
-		.get(`${serverUrl}/api/team/all`, {
-			headers
-		})
-		.then((res) => {
-			return { success: true, response: res.data };
-		})
-		.catch((err) => {
-			return { success: false, err };
-		});
+	return await doGetRequest('api/team/all', headers);
 };
 
 export const doAddNewProduct = async (data) => {
-	return await axios
-		.post(`${serverUrl}/api/products`, data, { headers })
-		.then((res) => {
-			return { success: true, response: res.data };
-		})
-		.catch((err) => {
-			return { success: false, err };
-		});
+	return await doPostRequest('api/products', data);
 };
 
 export const doFetchAllProducts = async () => {
-	return await axios
-		.get(`${serverUrl}/api/products/all`, {
-			headers
-		})
-		.then((res) => {
-			return { success: true, response: res.data };
-		})
-		.catch((err) => {
-			return { success: false, err };
-		});
+	return await doGetRequest('api/products/all', headers);
+};
+
+export const doFetchAllIssues = async () => {
+	return await doGetRequest('api/issues/all', headers);
+};
+
+export const doAddNewIssue = async (data) => {
+	return await doPostRequest('api/issues', data);
 };

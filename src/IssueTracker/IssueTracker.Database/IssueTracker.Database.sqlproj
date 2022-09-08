@@ -84,6 +84,7 @@
     <Build Include="Programmability\Stored Procedures\pr_UpdateIssueStatus.sql" />
     <Build Include="Programmability\Stored Procedures\pr_UpdateIssuePriority.sql" />
     <Build Include="Programmability\Stored Procedures\pr_UpdateIssueAssignee.sql" />
+    <Build Include="Programmability\Stored Procedures\pr_GetAllDevelopers.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="IssueTracker.Database.refactorlog" />

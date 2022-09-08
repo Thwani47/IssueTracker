@@ -3,14 +3,13 @@
 	@IssueDescription VARCHAR(MAX),
 	@ProductId UNIQUEIDENTIFIER,
 	@IssuePriority INT,
-	@AssignedTo UNIQUEIDENTIFIER,
 	@ResponseMessage VARCHAR(200) OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
 	BEGIN TRY
-		INSERT INTO tb_Issues (IssueId, IssueTitle, IssueDescription, IssuePriority,IssueStatus, ProductId, AssignedTo) 
-		VALUES (NEWID(), @IssueTitle, @IssueDescription, @IssuePriority, 0, @ProductId, @AssignedTo);
+		INSERT INTO tb_Issues (IssueId, IssueTitle, IssueDescription, IssuePriority,IssueStatus, ProductId) 
+		VALUES (NEWID(), @IssueTitle, @IssueDescription, @IssuePriority, 0, @ProductId);
 		SET @ResponseMessage = 'Issue Added Successfully';
 	END TRY
 	BEGIN CATCH

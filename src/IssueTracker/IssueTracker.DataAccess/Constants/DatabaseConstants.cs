@@ -20,4 +20,5 @@ public static class DatabaseConstants
     public static readonly string UpdateIssueStatusStoredProc = "dbo.pr_UpdateIssuePriority";
     public static readonly string UpdateIssuePriorityStoredProc = "dbo.pr_UpdateIssueStatus";
     public static readonly string UpdateIssueAssigneeStoredProc = "dbo.pr_UpdateIssueAssignee";
+    public static readonly string GetAllDevelopersStoredProc = "dbo.pr_GetAllDevelopers";
 }

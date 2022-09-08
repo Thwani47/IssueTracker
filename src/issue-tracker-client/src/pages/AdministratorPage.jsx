@@ -1,23 +1,27 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FormModal from '../components/FormModal';
+import NewIssueForm from '../components/NewIssueForm';
 import NewProductForm from '../components/NewProductForm';
 import NewTeamForm from '../components/NewTeamForm';
 import ProductsTable from '../components/ProductsTable';
 import TeamsTable from '../components/TeamsTable';
+import { setIssues } from '../redux/slices/issuesSlice';
 import { setProducts } from '../redux/slices/productsSlice';
 import { setTeams } from '../redux/slices/teamsSlice';
 import { setUsers } from '../redux/slices/usersSlice';
-import { doFetchAllProducts, doFetchAllTeams, doFetchAllUsers } from '../utils/api';
+import { doFetchAllProducts, doFetchAllTeams, doFetchAllUsers, doFetchAllIssues } from '../utils/api';
 
 export default function AdministratorPage() {
 	const teams = useSelector((state) => state.teams.teams);
 	const products = useSelector((state) => state.products.products);
+	const issues = useSelector((state) => state.issues.issues);
+	const user = useSelector((state) => state.auth.user);
 	const dispatch = useDispatch();
 	useEffect(
 		() => {
 			async function getAllUsers() {
-				const { success, response } = await doFetchAllUsers();
+				const { success, response } = await doFetchAllUsers(user.userType);
 				if (success) {
 					if (response.message === 'Users found') {
 						dispatch(setUsers(response.data.users));
@@ -61,29 +65,59 @@ export default function AdministratorPage() {
 		},
 		[ dispatch ]
 	);
+
+	useEffect(
+		() => {
+			async function getAllIssues() {
+				const { success, response } = await doFetchAllIssues();
+				if (success) {
+					if (response.message === 'Issues found') {
+						dispatch(setIssues(response.data.issues));
+					}
+				}
+			}
+
+			getAllIssues();
+		},
+		[ dispatch ]
+	);
+
 	return (
 		<div className="flex flex-col">
 			<div className="flex flex-row">
 				<div className="stats shadow self-center w-full cursor-auto">
 					<div className="stat place-items-center">
-						<div className="stat-title">Total Issues</div>
-						<div className="stat-value">30</div>
+						<div className="stat-title">Open Issues</div>
+						<div className="stat-value text-red-500">
+							{issues === null ? 0 : issues.filter((issue) => issue.issueStatus === 0).length}
+						</div>
 					</div>
 
 					<div className="stat place-items-center">
 						<div className="stat-title">In-Progress</div>
-						<div className="stat-value text-blue-500">8</div>
+						<div className="stat-value text-blue-500">
+							{issues === null ? 0 : issues.filter((issue) => issue.issueStatus === 1).length}
+						</div>
 						<div className="stat-desc text-secondary" />
 					</div>
 
 					<div className="stat place-items-center">
-						<div className="stat-title">New Issues</div>
-						<div className="stat-value text-red-500">22</div>
+						<div className="stat-title">Closed Issues</div>
+						<div className="stat-value text-green-500">
+							{issues === null ? 0 : issues.filter((issue) => issue.issueStatus === 2).length}
+						</div>
 					</div>
 				</div>
 			</div>
 			<div className="flex-flex-row self-start mt-3">
-				<button className="btn btn-error btn-xs">New Issue</button>
+				<label htmlFor="new-issue-modal" className="btn  modal-button btn-error btn-xs">
+					New Issue
+				</label>
+				<FormModal
+					id="new-issue-modal"
+					form={<NewIssueForm modalId="new-issue-modal" />}
+					title="Add new issue"
+				/>
 			</div>
 			<div className="flex flex-row mt-3 justify-between">
 				<div className="flex flex-col">

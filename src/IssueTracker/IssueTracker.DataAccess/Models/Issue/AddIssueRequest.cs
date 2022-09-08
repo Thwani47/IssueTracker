@@ -16,8 +16,6 @@ public class AddIssueRequest
     public Guid ProductId { get; set; }
     
     [Required(ErrorMessage = "Issue priority is required")]
-    public IssuePriority IssuePriority { get; set; }
-    
-    [Required(ErrorMessage = "Assignee Id is required")]
+    public IssuePriority IssuePriority { get; set; } 
     public Guid AssignedTo { get; set; }
 }

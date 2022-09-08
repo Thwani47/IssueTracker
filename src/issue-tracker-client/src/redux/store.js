@@ -4,6 +4,7 @@ import authReducer from './slices/authSlice';
 import usersReducer from './slices/usersSlice';
 import teamsReducer from './slices/teamsSlice';
 import productsReducer from './slices/productsSlice';
+import issuesProducer from './slices/issuesSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
 		auth: authReducer,
 		users: usersReducer,
 		teams: teamsReducer,
-		products: productsReducer
+		products: productsReducer,
+		issues: issuesProducer
 	}
 });

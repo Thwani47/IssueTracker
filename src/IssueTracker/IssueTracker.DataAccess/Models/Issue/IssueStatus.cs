@@ -3,6 +3,6 @@
 public enum IssueStatus
 {
     New = 0,
-    InProgress = 2,
+    InProgress = 1,
     Closed = 2
 }

@@ -16,6 +16,7 @@ public class ProductService : IProductService
     {
         _dapperDataAccess = dapperDataAccess;
     }
+
     public async Task<ProductDataResult> DoGetAllProducts()
     {
         var products = await _dapperDataAccess.QueryAsync<Product>(SqlDatabaseProvider.IssueTrackerDatabase,
@@ -30,7 +31,7 @@ public class ProductService : IProductService
                 Message = "Products found",
                 Data = new Dictionary<string, object>
                 {
-                    {"products", enumerable}
+                    { "products", enumerable }
                 }
             };
         }
@@ -41,8 +42,8 @@ public class ProductService : IProductService
             Message = "No products found",
             Data = new Dictionary<string, object>
             {
-            {"products", new List<Product>()}
-        }
+                { "products", new List<Product>() }
+            }
         };
     }
 
@@ -79,7 +80,7 @@ public class ProductService : IProductService
         var parameters = new DynamicParameters();
         parameters.Add("@ProductName", request.ProductName);
         parameters.Add("@TeamId", request.TeamId);
-        parameters.Add("@ResponseMessage", dbType: DbType.String, size:100, direction: ParameterDirection.Output);
+        parameters.Add("@ResponseMessage", dbType: DbType.String, size: 100, direction: ParameterDirection.Output);
         await _dapperDataAccess.ExecuteAsync(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.AddNewProductStoredProc, parameters);
 

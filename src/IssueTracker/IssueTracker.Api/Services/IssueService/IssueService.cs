@@ -28,7 +28,7 @@ public class IssueService : IIssueService
             return new IssueDataResult
             {
                 Status = AuthRequestStatus.Success,
-                Message = "Issue found",
+                Message = "Issues found",
                 Data = new Dictionary<string, object>
                 {
                     { "issues", enumerable }
@@ -39,7 +39,7 @@ public class IssueService : IIssueService
         return new IssueDataResult
         {
             Status = AuthRequestStatus.Success,
-            Message = "No teams found",
+            Message = "No issues found",
             Data = new Dictionary<string, object>
             {
                 { "issues", new List<Issue>() }
@@ -51,10 +51,10 @@ public class IssueService : IIssueService
     {
         var parameters = new DynamicParameters();
         parameters.Add("@IssueId", issueId);
-        var teams = await _dapperDataAccess.QueryAsync<Issue>(SqlDatabaseProvider.IssueTrackerDatabase,
-            DatabaseConstants.GetTeamByIdStoredProc, parameters);
+        var issues = await _dapperDataAccess.QueryAsync<Issue>(SqlDatabaseProvider.IssueTrackerDatabase,
+            DatabaseConstants.GetIssueByIdStoredProc, parameters);
 
-        var enumerable = teams as Issue[] ?? teams.ToArray();
+        var enumerable = issues as Issue[] ?? issues.ToArray();
         if (enumerable.Any())
         {
             return new IssueDataResult
@@ -82,7 +82,6 @@ public class IssueService : IIssueService
         parameters.Add("@IssueDescription", request.IssueDescription);
         parameters.Add("@ProductId", request.ProductId);
         parameters.Add("@IssuePriority", (int)request.IssuePriority);
-        parameters.Add("@AssignedTo", request.AssignedTo);
         parameters.Add("@ResponseMessage", dbType: DbType.String, size: 100, direction: ParameterDirection.Output);
         await _dapperDataAccess.ExecuteAsync(SqlDatabaseProvider.IssueTrackerDatabase,
             DatabaseConstants.AddNewIssueStoredProc, parameters);

@@ -44,10 +44,17 @@ public class UserService : IUserService
         };
     }
 
-    public async Task<UserDataResult> DoGetAllUsers()
+    public async Task<UserDataResult> DoGetAllUsers(int userType)
     {
+        var user = (UserType)userType;
+
+        var storedProc = DatabaseConstants.GetAllUsersStoredProc;
+        if (user is UserType.TeamLead or UserType.Developer)
+        {
+            storedProc = DatabaseConstants.GetAllDevelopersStoredProc;
+        }
         var users = await _dapperDataAccess.QueryAsync<User>(SqlDatabaseProvider.IssueTrackerDatabase,
-            DatabaseConstants.GetAllUsersStoredProc);
+            storedProc);
 
         var enumerable = users.ToList();
         if (enumerable.Any())

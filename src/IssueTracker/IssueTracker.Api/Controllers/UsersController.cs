@@ -37,12 +37,12 @@ public class UsersController : ControllerBase
         }
     }
 
-    [HttpGet("all")]
-    public async Task<IActionResult> GetAllUsers()
+    [HttpGet("all/{userType}")]
+    public async Task<IActionResult> GetAllUsers(int userType)
     {
         try
         {
-            var result = await _userService.DoGetAllUsers();
+            var result = await _userService.DoGetAllUsers(userType);
 
             if (result.Status == AuthRequestStatus.Failure)
             {
