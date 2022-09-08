@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FormModal from '../components/FormModal';
+import IssueStatBar from '../components/IssueStatsBar';
 import NewIssueForm from '../components/NewIssueForm';
 import NewProductForm from '../components/NewProductForm';
 import NewTeamForm from '../components/NewTeamForm';
@@ -18,6 +19,7 @@ export default function AdministratorPage() {
 	const issues = useSelector((state) => state.issues.issues);
 	const user = useSelector((state) => state.auth.user);
 	const dispatch = useDispatch();
+	
 	useEffect(
 		() => {
 			async function getAllUsers() {
@@ -85,29 +87,7 @@ export default function AdministratorPage() {
 	return (
 		<div className="flex flex-col">
 			<div className="flex flex-row">
-				<div className="stats shadow self-center w-full cursor-auto">
-					<div className="stat place-items-center">
-						<div className="stat-title">Open Issues</div>
-						<div className="stat-value text-red-500">
-							{issues === null ? 0 : issues.filter((issue) => issue.issueStatus === 0).length}
-						</div>
-					</div>
-
-					<div className="stat place-items-center">
-						<div className="stat-title">In-Progress</div>
-						<div className="stat-value text-blue-500">
-							{issues === null ? 0 : issues.filter((issue) => issue.issueStatus === 1).length}
-						</div>
-						<div className="stat-desc text-secondary" />
-					</div>
-
-					<div className="stat place-items-center">
-						<div className="stat-title">Closed Issues</div>
-						<div className="stat-value text-green-500">
-							{issues === null ? 0 : issues.filter((issue) => issue.issueStatus === 2).length}
-						</div>
-					</div>
-				</div>
+				<IssueStatBar issues={issues}  />
 			</div>
 			<div className="flex-flex-row self-start mt-3">
 				<label htmlFor="new-issue-modal" className="btn  modal-button btn-error btn-xs">
