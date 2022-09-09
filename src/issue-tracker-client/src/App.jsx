@@ -12,6 +12,7 @@ import ProfilePage from './pages/ProfilePage';
 import TeamPage from './pages/TeamPage';
 import { setUserData } from './redux/slices/authSlice';
 import { doGetUserDetails } from './utils/api';
+import ProductPage from './pages/ProductPage';
 
 function App() {
 	const auth = useSelector((state) => state.auth);
@@ -52,6 +53,14 @@ function App() {
 					element={
 						<PrivateRoute>
 							<TeamPage />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					path="/product/:productId"
+					element={
+						<PrivateRoute>
+							<ProductPage />
 						</PrivateRoute>
 					}
 				/>

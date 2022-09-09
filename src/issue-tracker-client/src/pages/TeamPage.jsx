@@ -1,65 +1,18 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import ProductsTable from '../components/ProductsTable';
-import { setProducts } from '../redux/slices/productsSlice';
-import { setTeams } from '../redux/slices/teamsSlice';
-import { setUsers } from '../redux/slices/usersSlice';
-import { doFetchAllProducts, doFetchAllTeams, doFetchAllUsers } from '../utils/api';
+import { useFetchAllProducts, useFetchAllTeams, useFetchAllUsers } from '../hooks';
 
 export default function TeamPage() {
 	const teams = useSelector((state) => state.teams.teams);
-	const dispatch = useDispatch();
 	const user = useSelector((state) => state.auth.user);
 	const products = useSelector((state) => state.products.products);
+	const users = useSelector((state) => state.users.users);
 
-	useEffect(
-		() => {
-			async function getAllUsers() {
-				const { success, response } = await doFetchAllUsers(user.userType);
-				if (success) {
-					if (response.message === 'Users found') {
-						dispatch(setUsers(response.data.users));
-					}
-				}
-			}
-
-			getAllUsers();
-		},
-		[ dispatch ]
-	);
-
-	useEffect(
-		() => {
-			async function getAllProducts() {
-				const { success, response } = await doFetchAllProducts();
-				if (success) {
-					if (response.message === 'Products found') {
-						dispatch(setProducts(response.data.products));
-					}
-				}
-			}
-
-			getAllProducts();
-		},
-		[ dispatch ]
-	);
-
-	useEffect(
-		() => {
-			async function getAllTeams() {
-				const { success, response } = await doFetchAllTeams();
-				if (success) {
-					if (response.message === 'Teams found') {
-						dispatch(setTeams(response.data.teams));
-					}
-				}
-			}
-
-			getAllTeams();
-		},
-		[ dispatch ]
-	);
+	useFetchAllUsers(user.userType);
+	useFetchAllProducts();
+	useFetchAllTeams();
+	useFetchAllUsers();
 
 	const params = useParams();
 	return (
@@ -94,11 +47,28 @@ export default function TeamPage() {
 									.filter((product) => product.teamId === params.teamId)
 									.map((filteredProduct, index) => (
 										<div key={index} className="flex flex-col">
-											<p>{filteredProduct.productName}</p>
+											<a
+												href={`/product/${filteredProduct.productId}`}
+												className="link link-hover"
+											>
+												{filteredProduct.productName}
+											</a>
 										</div>
 									))
 							) : null}
 						</div>
+						<div className="flex flex-row">
+							<div className="flex flex-col">
+								<p className="font-bold mt-2 text-xl mb-2">Developers</p>
+							</div>
+						</div>
+						{users && users.length > 0 ? (
+							users.filter((u) => u.userType === 0).map((filteredUser, index) => (
+								<div key={index} className="flex flex-col self-start">
+									<p className="link link-hover">{filteredUser.firstName}</p>
+								</div>
+							))
+						) : null}
 						<div className="border-1 rounded-lg border-red-500 shadow-lg w-80 mt-6 p-2">
 							<div className="flex flex-col">
 								<div className="flex flex-row">

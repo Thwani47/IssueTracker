@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import FormModal from '../components/FormModal';
 import IssueStatBar from '../components/IssueStatsBar';
 import NewIssueForm from '../components/NewIssueForm';
@@ -7,87 +7,23 @@ import NewProductForm from '../components/NewProductForm';
 import NewTeamForm from '../components/NewTeamForm';
 import ProductsTable from '../components/ProductsTable';
 import TeamsTable from '../components/TeamsTable';
-import { setIssues } from '../redux/slices/issuesSlice';
-import { setProducts } from '../redux/slices/productsSlice';
-import { setTeams } from '../redux/slices/teamsSlice';
-import { setUsers } from '../redux/slices/usersSlice';
-import { doFetchAllProducts, doFetchAllTeams, doFetchAllUsers, doFetchAllIssues } from '../utils/api';
+import { useFetchAllIssues, useFetchAllProducts, useFetchAllTeams, useFetchAllUsers } from '../hooks';
 
 export default function AdministratorPage() {
 	const teams = useSelector((state) => state.teams.teams);
 	const products = useSelector((state) => state.products.products);
 	const issues = useSelector((state) => state.issues.issues);
 	const user = useSelector((state) => state.auth.user);
-	const dispatch = useDispatch();
-	
-	useEffect(
-		() => {
-			async function getAllUsers() {
-				const { success, response } = await doFetchAllUsers(user.userType);
-				if (success) {
-					if (response.message === 'Users found') {
-						dispatch(setUsers(response.data.users));
-					}
-				}
-			}
 
-			getAllUsers();
-		},
-		[ dispatch ]
-	);
-
-	useEffect(
-		() => {
-			async function getAllTeams() {
-				const { success, response } = await doFetchAllTeams();
-				if (success) {
-					if (response.message === 'Teams found') {
-						dispatch(setTeams(response.data.teams));
-					}
-				}
-			}
-
-			getAllTeams();
-		},
-		[ dispatch ]
-	);
-
-	useEffect(
-		() => {
-			async function getAllProducts() {
-				const { success, response } = await doFetchAllProducts();
-				if (success) {
-					if (response.message === 'Products found') {
-						dispatch(setProducts(response.data.products));
-					}
-				}
-			}
-
-			getAllProducts();
-		},
-		[ dispatch ]
-	);
-
-	useEffect(
-		() => {
-			async function getAllIssues() {
-				const { success, response } = await doFetchAllIssues();
-				if (success) {
-					if (response.message === 'Issues found') {
-						dispatch(setIssues(response.data.issues));
-					}
-				}
-			}
-
-			getAllIssues();
-		},
-		[ dispatch ]
-	);
+	useFetchAllUsers(user.userType);
+	useFetchAllTeams();
+	useFetchAllProducts();
+	useFetchAllIssues();
 
 	return (
 		<div className="flex flex-col">
 			<div className="flex flex-row">
-				<IssueStatBar issues={issues}  />
+				<IssueStatBar issues={issues} />
 			</div>
 			<div className="flex-flex-row self-start mt-3">
 				<label htmlFor="new-issue-modal" className="btn  modal-button btn-error btn-xs">
